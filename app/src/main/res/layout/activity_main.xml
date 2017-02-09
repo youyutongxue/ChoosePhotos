@@ -8,18 +8,27 @@
     android:orientation="vertical"
     tools:context="com.virgil.choosephotos.MainActivity">
 
-<!--    <ImageButton
-        android:id="@+id/main_imb_addPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:background="@color/transparent"
-        android:src="@drawable/icon_addpic_unfocused" />-->
+    <!--    <ImageButton
+            android:id="@+id/main_imb_addPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:background="@color/transparent"
+            android:src="@drawable/icon_addpic_unfocused" />-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/main_rv_showPhoto"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="12dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp" />
+
+    <Button
+        android:id="@+id/btn_release"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="12dp"
+        android:text="发布" />
 </LinearLayout>

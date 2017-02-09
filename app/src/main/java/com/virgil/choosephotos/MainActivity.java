@@ -11,11 +11,13 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
@@ -23,23 +25,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.virgil.choosephotos.photoscan.ShowpicActivity;
+import com.virgil.choosephotos.utils.CompressPhotoUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.nereo.multi_image_selector.MultiImageSelector;
 
 public class MainActivity extends AppCompatActivity {
     private Context mContext = this;
-    private ImageButton mAddPhoto;
+
     private RecyclerView mRV;
     private Intent mIntent = new Intent();
     private static ShowImageAdapter adapter;
-    private static int mPosition = 10;//标记被删除的图片,给一个默认值为10
+    private Button mBtn_release;//发布
 
+    private static int mPosition = 10;//标记被删除的图片,给一个默认值为10
     private static final int REQUEST_IMAGE = 2;
     protected static final int REQUEST_STORAGE_READ_ACCESS_PERMISSION = 101;
     protected static final int REQUEST_STORAGE_WRITE_ACCESS_PERMISSION = 102;
-    private ArrayList<String> mSelectPath = new ArrayList<>();
+    private static ArrayList<String> mSelectPath = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +55,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         mRV = (RecyclerView) findViewById(R.id.main_rv_showPhoto);
-        /*mAddPhoto = (ImageButton) findViewById(R.id.main_imb_addPhoto);
-        mAddPhoto.setOnClickListener(new View.OnClickListener() {
+        mBtn_release = (Button) findViewById(R.id.btn_release);
+
+        mBtn_release.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pickImage();
+                new CompressPhotoUtils().CompressPhoto(MainActivity.this, mSelectPath, new CompressPhotoUtils.CompressCallBack() {
+
+                    @Override
+                    public void success(List<String> list) {
+                        //upload(list);执行上传的方法
+                        Toast.makeText(mContext, "上传成功", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
-        });*/
+        });
     }
 
     private void pickImage() {
