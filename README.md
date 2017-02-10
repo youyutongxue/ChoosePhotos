@@ -26,4 +26,7 @@ selector.origin(mSelectPath);
 selector.start(MainActivity.this, REQUEST_IMAGE);
 ```
 
+![](https://github.com/youyutongxue/ChoosePhotos/blob/master/app/src/main/java/com/virgil/choosephotos/art/1.jpeg)
 
+获取到结果：
+![](https://github.com/youyutongxue/ChoosePhotos/blob/master/app/src/main/java/com/virgil/choosephotos/art/2.png)
