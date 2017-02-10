@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void success(List<String> list) {
+                        //list里保存了经过压缩、处理后的图片地址
                         //upload(list);执行上传的方法
                         Toast.makeText(mContext, "上传成功", Toast.LENGTH_SHORT).show();
                     }
@@ -138,34 +139,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (ShowpicActivity.mPosition == 10) {
-            mRV.setLayoutManager(new GridLayoutManager(mContext, 3));
-            mRV.setHasFixedSize(true);
-            adapter = new ShowImageAdapter(mContext, mSelectPath, mRV);
-            mRV.setAdapter(adapter);
-            adapter.setOnItemClickedListener(new ShowImageAdapter.OnItemClickedListener() {
-                @Override
-                public void onItemClick(int position) {
-                    //Log.i("position", position + "");
-                    if (position < mSelectPath.size()) {
-                        mIntent.putExtra("position", position);
-                        mIntent.putStringArrayListExtra("mImages", mSelectPath);
-                        mIntent.setClass(mContext, ShowpicActivity.class);
-                        mContext.startActivity(mIntent);
-                    } else {
-                        pickImage();
-                    }
-                }
-
-                @Override
-                public boolean onItemLongClick(int position) {
-                    mPosition = position;
-                    showDialog();
-                    return false;
-                }
-            });
+            loadDataToView();
         } else {
             mSelectPath.remove(ShowpicActivity.mPosition);
-            adapter.notifyDataSetChanged();
+            loadDataToView();
             ShowpicActivity.mPosition = 10;
         }
     }
@@ -175,6 +152,37 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         mSelectPath.clear();
         mPosition = 10;
+    }
+
+    /**
+     * 加载数据到控件上
+     */
+    public void loadDataToView() {
+        mRV.setLayoutManager(new GridLayoutManager(mContext, 3));
+        mRV.setHasFixedSize(true);
+        adapter = new ShowImageAdapter(mContext, mSelectPath, mRV);
+        mRV.setAdapter(adapter);
+        adapter.setOnItemClickedListener(new ShowImageAdapter.OnItemClickedListener() {
+            @Override
+            public void onItemClick(int position) {
+                //Log.i("position", position + "");
+                if (position < mSelectPath.size()) {
+                    mIntent.putExtra("position", position);
+                    mIntent.putStringArrayListExtra("mImages", mSelectPath);
+                    mIntent.setClass(mContext, ShowpicActivity.class);
+                    mContext.startActivity(mIntent);
+                } else {
+                    pickImage();
+                }
+            }
+
+            @Override
+            public boolean onItemLongClick(int position) {
+                mPosition = position;
+                showDialog();
+                return false;
+            }
+        });
     }
 
     public void showDialog() {
@@ -187,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 //Log.i("position", position + "");
                 mSelectPath.remove(mPosition);
-                adapter.notifyDataSetChanged();
+                loadDataToView();
                 Toast.makeText(MainActivity.this, "删除成功", Toast.LENGTH_SHORT)
                         .show();
             }
