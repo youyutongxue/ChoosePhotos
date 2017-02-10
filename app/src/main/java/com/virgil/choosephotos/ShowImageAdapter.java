@@ -18,7 +18,7 @@ import java.util.List;
 
 
 /**
- * Created by 陈有余 on 2016/11/28 13:43.
+ * Created by virgil on 2016/11/28 13:43.
  */
 
 public class ShowImageAdapter extends RecyclerView.Adapter {

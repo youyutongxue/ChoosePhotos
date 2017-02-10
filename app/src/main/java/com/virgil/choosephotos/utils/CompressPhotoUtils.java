@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by 陈有余 on 2017/2/9 10:22.
+ * Created by virgil on 2017/2/9 10:22.
  */
 
 public class CompressPhotoUtils {
@@ -53,7 +53,7 @@ public class CompressPhotoUtils {
         protected Integer doInBackground(Void... params) {
             for (int i = 0; i < list.size(); i++) {
                 Bitmap bitmap = getBitmap(list.get(i));
-                String path = SaveBitmap(bitmap, i);
+                String path = SaveBitmap(bitmap, i, list.get(i));
                 fileList.add(path);
             }
             return null;
@@ -103,8 +103,12 @@ public class CompressPhotoUtils {
     /**
      * 保存bitmap到内存卡
      */
-    public static String SaveBitmap(Bitmap bmp, int num) {
-        File file = new File("mnt/sdcard/车福管家/uploadImage");
+    public static String SaveBitmap(Bitmap bmp, int num, String _path) {
+        //解决部分手机上传图片选择90度问题
+        int degree = ImageProcessingUtils.readPictureDegree(_path);//获取旋转的角度
+        Bitmap bitmap = ImageProcessingUtils.rotaingImageView(degree, bmp);//选择图片
+        //将处理后的图片进行保存
+        File file = new File("mnt/sdcard/app/uploadImage");
         String path = null;
         if (!file.exists())
             file.mkdirs();
@@ -113,7 +117,7 @@ public class CompressPhotoUtils {
             String picName = formatter.format(new Date());
             path = file.getPath() + "/" + picName + "-" + num + ".jpg";
             FileOutputStream fileOutputStream = new FileOutputStream(path);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 90, fileOutputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fileOutputStream);
             fileOutputStream.flush();
             fileOutputStream.close();
         } catch (Exception e) {
