@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * Created by virgil on 2017/2/9 10:22.
+ * 图片批量压缩工具类
  */
 
 public class CompressPhotoUtils {
@@ -106,7 +107,7 @@ public class CompressPhotoUtils {
     public static String SaveBitmap(Bitmap bmp, int num, String _path) {
         //解决部分手机上传图片选择90度问题
         int degree = ImageProcessingUtils.readPictureDegree(_path);//获取旋转的角度
-        Bitmap bitmap = ImageProcessingUtils.rotaingImageView(degree, bmp);//选择图片
+        Bitmap bitmap = ImageProcessingUtils.rotaingImageView(degree, bmp);//旋转图片
         //将处理后的图片进行保存
         File file = new File("mnt/sdcard/app/uploadImage");
         String path = null;

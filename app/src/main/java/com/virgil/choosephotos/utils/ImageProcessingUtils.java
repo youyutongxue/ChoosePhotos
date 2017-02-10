@@ -13,6 +13,8 @@ import java.io.IOException;
 
 /**
  * Created by virgil on 2017/2/10 11:26.
+ *
+ * 图片处理工具类
  */
 
 public class ImageProcessingUtils {

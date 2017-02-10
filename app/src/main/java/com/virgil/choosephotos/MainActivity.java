@@ -82,9 +82,10 @@ public class MainActivity extends AppCompatActivity {
                     REQUEST_STORAGE_READ_ACCESS_PERMISSION);
         } else {
             MultiImageSelector selector = MultiImageSelector.create(MainActivity.this);
-            selector.showCamera(true);
-            selector.count(9);
-            selector.multi();
+            selector.showCamera(true);//是否显示照相机
+            selector.count(9);//设置选择图片的上限
+            selector.multi();//设置可以多选，默认是多选
+            //selector.single();//设置只能进行单选
             selector.origin(mSelectPath);
             selector.start(MainActivity.this, REQUEST_IMAGE);
         }
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_IMAGE) {
             if (resultCode == RESULT_OK) {
+                //获取到所有选择的图片的地址
                 mSelectPath = data.getStringArrayListExtra(MultiImageSelector.EXTRA_RESULT);
                 StringBuilder sb = new StringBuilder();
                 for (String p : mSelectPath) {
